@@ -25,22 +25,22 @@
 %% ====================================================================
 
 -define( DEFAULT_PROFILE,	[
-								{ sb, 	"\e[0;37m~ts\e[0m" }, 	% $[]
+								{ sb, 	"\e[0;33m~ts\e[0m" }, 	% $[]
 								
-								{ cb, 	"\e[0;34m~ts\e[0m" }, 	% ${}
+								{ cb, 	"\e[1;34m~ts\e[0m" }, 	% ${}
 
 								{ bstr,	"\e[0;34m~ts\e[0m" },	% $<< >>
 
 								{ pipe,		"\e[0;34m~ts\e[0m" }, 	% $|
-								{ comma,	"\e[0;34m~ts\e[0m" }, 	% $,
+								{ comma,	"\e[1;36m~ts\e[0m" }, 	% $,
 								{ colon,	"\e[0;34m~ts\e[0m" },	% $:
 								{ hash,		"\e[0;34m~ts\e[0m" },	% $#
 								{ ellipsis, "\e[0;34m~ts\e[0m" },   % $...
 								{ eq,		"\e[0;34m~ts\e[0m" },	% =
 								{ arrow,	"\e[0;34m~ts\e[0m" },	% =>
 								
-								{ term, 	"\e[0;36m~ts\e[0m" },
-								{ name, 	"\e[0;35m~ts\e[0m" },
+								{ term, 	"\e[1;32m~ts\e[0m" },
+								{ name, 	"\e[1;35m~ts\e[0m" },
 								{ field,	"\e[0;34m~ts\e[0m" },
 								{ string,	"\e[0;33m~ts\e[0m" },
 								{ digits,	"\e[0;32m~ts\e[0m" },
