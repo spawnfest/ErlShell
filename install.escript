@@ -28,8 +28,6 @@ main(_) -> main().
 
 copy_files(Wildcard, Destination, Modes) ->
 
-	io:format("~n[~w:~p] Copy Files : Wildcard : ~p Dest: ~p Modes : ~p~n",
-									[?MODULE, ?LINE, Wildcard, Destination, Modes]),
     N = lists:foldl(
         fun(Source, Acc) ->
             Target = case filelib:is_dir(Destination) of
