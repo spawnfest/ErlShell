@@ -34,7 +34,7 @@
 								{ pipe,		"\e[0;34m~ts\e[0m" }, 	% $|
 								{ comma,	"\e[1;36m~ts\e[0m" }, 	% $,
 								{ colon,	"\e[0;34m~ts\e[0m" },	% $:
-								{ hash,		"\e[0;34m~ts\e[0m" },	% $#
+								{ hash,		"\e[1;34m~ts\e[0m" },	% $#
 								{ ellipsis, "\e[0;34m~ts\e[0m" },   % $...
 								{ eq,		"\e[0;34m~ts\e[0m" },	% =
 								{ arrow,	"\e[0;34m~ts\e[0m" },	% =>
