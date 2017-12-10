@@ -81,19 +81,35 @@
 								{ eq,		"\e[0;34m~ts\e[0m" },	% =
 								{ arrow,	"\e[0;34m~ts\e[0m" },	% =>
 								
-								{ term, 	"\e[0;32m~ts\e[0m" },
-								{ name, 	"\e[1;35m~ts\e[0m" },
-								{ field,	"\e[0;34m~ts\e[0m" },
+								{ term, 	"\e[0;32m~ts\e[0m" },	% atom, integer
+								{ name, 	"\e[1;35m~ts\e[0m" },	% record and map name
+								{ field,	"\e[0;34m~ts\e[0m" },	% record field
 								{ string,	"\e[0;33m~ts\e[0m" },
 								{ digits,	"\e[0;32m~ts\e[0m" },
-								{ function, "\e[0;35m~ts\e[0m" },
-								{ prompt,	"\e[2;33m~ts\e[0m" }
+								{ function, "\e[0;35m~ts\e[0m" },	% function name
+								{ prompt,	"\e[2;33m~ts\e[0m" }	% Shell prompt
 
 		 					]).
 
 %% ====================================================================
 %% APIs
 %% ====================================================================
+
+%%-------------------------------------------------------------------
+%% @doc
+%%		Function Based on Class and pre-defined Color Schems adds
+%%	Color codes to input string.
+%%
+%%	Function Arguments :
+%%	 Argument 1 : An Atom indicates string type
+%%				 Possible Values :	sb, cb, rb, bstr, pipe, comma,colon, 
+%%									hash, ellipsis, eq, arrow, term, name, 
+%%									field, string, digits, function, prompt
+%%
+%%	Argument 2 : A String,
+%%				 For Eg, "[" or "atom"'
+%%	@spec beautify( atom(), list() ) -> list().
+%%-------------------------------------------------------------------
 
 beautify(Class,Str) ->
 	case lists:keyfind(Class, 1, ?DEFAULT_PROFILE) of
