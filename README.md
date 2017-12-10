@@ -16,6 +16,10 @@ Take on Ubuntu with Default Terminal.
 
 ## How to install ##
 
+Clone:
+~~~
+  $ git clone --recursive https://github.com/spawnfest/ErlShell.git
+~~~ 
 Automatically (you may need to run this command with `sudo` and run erl shell with `sudo`):
 
  `$ make install`
@@ -37,4 +41,8 @@ Manually :
 3. Remove Back file extension ie. `.backup-pre-pretty-erlshell`
 4. restart Erlang Shell.
 5. done :)
+
+## Author ##
+
+- Prakash Parmar (prakash.parmar@outlook.com)
 
