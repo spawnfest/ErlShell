@@ -21,17 +21,15 @@
 
 -import(shell_profile,[beautify/2]).
 
-%% -export([flush_receive/0, error_message/2, progname/0, nonl/1, send/2,
-%% 	 sendw/2, eval_str/1]).
-%% 
-%% -export([extended_parse_exprs/1, extended_parse_term/1,
-%%          subst_values_for_vars/2]).
-%% 
-%% -export([format_exception/6, format_exception/7,
-%%          format_stacktrace/4, format_stacktrace/5,
-%%          format_call/4, format_call/5, format_fun/1, format_fun/2]).
+-export([flush_receive/0, error_message/2, progname/0, nonl/1, send/2,
+	 sendw/2, eval_str/1]).
 
--compile([export_all]).
+-export([extended_parse_exprs/1, extended_parse_term/1,
+         subst_values_for_vars/2]).
+
+-export([format_exception/6, format_exception/7,
+         format_stacktrace/4, format_stacktrace/5,
+         format_call/4, format_call/5, format_fun/1, format_fun/2]).
 
 -spec flush_receive() -> 'ok'.
 
