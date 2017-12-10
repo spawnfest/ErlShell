@@ -51,7 +51,7 @@
 								{ string,	"\e[0;33m~ts\e[0m" },
 								{ digits,	"\e[0;32m~ts\e[0m" },
 								{ function, "\e[0;35m~ts\e[0m" },
-								{ prompt,	"\e[1;36m~ts\e[0m" }
+								{ prompt,	"\e[2;33m~ts\e[0m" }
 
 		 					]).
 
