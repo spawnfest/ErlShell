@@ -44,5 +44,9 @@ Manually :
 
 ## Author ##
 
-- Prakash Parmar (prakash.parmar@outlook.com)
+- Prakash Parmar ( prakash.parmar@outlook.com )
+
+## Thanks ##
+
+Thanks to Fred Hebert for details explanation about erlang shell and its working on his ![Blog Post](https://ferd.ca/repl-a-bit-more-and-less-than-that.html)
 
