@@ -103,7 +103,8 @@ print(Term, Col, Ll, D, M, RecDefFun) ->
 %% Col = current column, default 1
 %% Ll = line length/~p field width, default 80
 %% M = CHAR_MAX (-1 if no max, 60 when printing from shell)
-print(_, _, _, 0, _M, _RF, _Enc, _Str) -> "...";
+
+print(_, _, _, 0, _M, _RF, _Enc, _Str) -> beautify(ellipsis,"...");
 print(Term, Col, Ll, D, M, RecDefFun, Enc, Str) when Col =< 0 ->
     %% ensure Col is at least 1
     print(Term, 1, Ll, D, M, RecDefFun, Enc, Str);
@@ -155,7 +156,7 @@ pp({_S, Len} = If, Col, Ll, M, _TInd, _Ind, LD, W)
     write(If);
 
 pp({{list,L}, _Len}, Col, Ll, M, TInd, Ind, LD, W) ->
-    [ beautify(sb, "["), pp_list(L, Col + 1, Ll, M, TInd, indent(1, Ind), LD, beautify(pipe,"|"), W + 1), 
+    [ beautify(sb,"["), pp_list(L, Col + 1, Ll, M, TInd, indent(1, Ind), LD, beautify(pipe,"|"), W + 1), 
 	  beautify(sb,"]")];
 
 pp({{tuple,true,L}, _Len}, Col, Ll, M, TInd, Ind, LD, W) ->
@@ -166,7 +167,7 @@ pp({{tuple,false,L}, _Len}, Col, Ll, M, TInd, Ind, LD, W) ->
 	  beautify(cb,"}")];
 
 pp({{map,Pairs},_Len}, Col, Ll, M, TInd, Ind, LD, W) ->
-    [ beautify(hash,"#"), beautify(cb, "{"), pp_map(Pairs, Col + 2, Ll, M, TInd, indent(2, Ind), LD, W + 1),
+    [ beautify(hash,"#"), beautify(cb,"{"), pp_map(Pairs, Col + 2, Ll, M, TInd, indent(2, Ind), LD, W + 1),
       beautify(cb,"}")];
 
 pp({{record,[{Name,NLen} | L]}, _Len}, Col, Ll, M, TInd, Ind, LD, W) ->
@@ -206,7 +207,7 @@ pp_map([P | Ps], Col, Ll, M, TInd, Ind, LD, W) ->
 pp_pairs_tail([], _Col0, _Col, _Ll, _M, _TInd, _Ind, _LD, _W) ->
     "";
 pp_pairs_tail({dots, _}, _Col0, _Col, _M, _Ll, _TInd, _Ind, _LD, _W) ->
-    beautify(comma,",")++beautify(ellipsis,"...");
+   lists:concat([beautify(comma,","),beautify(ellipsis,"...")]);
 	
 pp_pairs_tail([{_, Len}=P | Ps], Col0, Col, Ll, M, TInd, Ind, LD, W) ->
     LD1 = last_depth(Ps, LD),
@@ -233,7 +234,7 @@ pp_pair({_, Len}=Pair, Col, Ll, M, _TInd, _Ind, LD, W)
 pp_pair({{map_pair, K, V}, _Len}, Col0, Ll, M, TInd, Ind0, LD, W) ->
     I = map_value_indent(TInd),
     Ind = indent(I, Ind0),
-    {[pp(K, Col0, Ll, M, TInd, Ind0, LD, W), beautify(arrow," =>")++"\n",
+    {[pp(K, Col0, Ll, M, TInd, Ind0, LD, W), beautify(arrow," =>\n"),
       Ind | pp(V, Col0 + I, Ll, M, TInd, Ind, LD, 0)], Ll}. % force nl
 
 pp_record([], _Nlen, _Col, _Ll, _M, _TInd, _Ind, _LD, _W) ->
@@ -252,7 +253,7 @@ pp_fields_tail([], _Col0, _Col, _Ll, _M, _TInd, _Ind, _LD, _W) ->
     "";
 
 pp_fields_tail({dots, _}, _Col0, _Col, _M, _Ll, _TInd, _Ind, _LD, _W) ->
-    beautify(comma,",")++beautify(ellipsis,"...");
+    lists:concat([beautify(comma,","),beautify(ellipsis,"...")]);
 
 pp_fields_tail([{_, Len}=F | Fs], Col0, Col, Ll, M, TInd, Ind, LD, W) ->
     LD1 = last_depth(Fs, LD),
@@ -373,7 +374,7 @@ write({{list, L}, _}) ->
     [beautify(sb,"["), write_list(L, beautify(pipe,"|")), beautify(sb,"]")];
 
 write({{map, Pairs}, _}) ->
-    [beautify(hash,"#"),beautify(cb,"{"), write_list(Pairs, $,), beautify(cb,"}")];
+    [beautify(hash,"#"),beautify(cb,"{"), write_list(Pairs, beautify(comma,",")), beautify(cb,"}")];
 
 write({{map_pair, _K, _V}, _}=Pair) ->
     write_pair(Pair);
@@ -399,12 +400,12 @@ write_fields([F | Fs]) ->
 write_fields_tail([]) ->
     "";
 write_fields_tail({dots, _}) ->
-    beautify(comma,",")++beautify(ellipsis,"...");
+    lists:concat([beautify(comma,","),beautify(ellipsis,"...")]);
 write_fields_tail([F | Fs]) ->
     [beautify(comma,","), write_field(F) | write_fields_tail(Fs)].
 
 write_field({{field, Name, _NameL, F}, _}) ->
-    [beautify(field,Name), beautify(eq," = ") | write(F)].
+    [beautify(name,Name), beautify(eq," = ") | write(F)].
 
 write_list({dots, _}, _S) ->
     beautify(ellipsis,"...");
@@ -431,7 +432,7 @@ print_length([], _D, _RF, _Enc, _Str) ->
 print_length({}, _D, _RF, _Enc, _Str) ->
     {beautify(cb,"{}"), 2};
 print_length(#{}=M, _D, _RF, _Enc, _Str) when map_size(M) =:= 0 ->
-    {beautify(hash,"#")++beautify(cb,"{}"), 3};
+    {lists:concat([beautify(hash,"#"),beautify(cb,"{}")]), 3};
 print_length(Atom, _D, _RF, Enc, _Str) when is_atom(Atom) ->
     S = write_atom(Atom, Enc),
 	Str = beautify(term,S),
@@ -442,8 +443,7 @@ print_length(List, D, RF, Enc, Str) when is_list(List) ->
         true ->
             %% print as string, escaping double-quotes in the list
             S = write_string(List, Enc),
-			Str = beautify(string,S),
-            {Str, length(S)};
+            {S, length(S)};
         %% Truncated lists could break some existing code.
         % {true, Prefix} ->
         %    S = write_string(Prefix, Enc),
@@ -473,7 +473,7 @@ print_length(<<>>, _D, _RF, _Enc, _Str) ->
     {beautify(bstr,"<<>>"), 4};
 
 print_length(<<_/bitstring>>, 1, _RF, _Enc, _Str) ->
-    {beautify(bstr,"<<")++beautify(ellipsis,"...")++beautify(bstr,">>"), 7};
+    {lists:concat([beautify(bstr,"<<"),beautify(ellipsis,"..."),beautify(bstr,">>")]), 7};
 
 print_length(<<_/bitstring>>=Bin, D, _RF, Enc, Str) ->
     case bit_size(Bin) rem 8 of
@@ -510,7 +510,10 @@ print_length(Term, _D, _RF, _Enc, _Str) ->
     {Str, lists:flatlength(Str)}.
 
 print_length_map(_Map, 1, _RF, _Enc, _Str) ->
-    {beautify(hash,"#")++beautify(cb, "{")++beautify(ellipsis, "...")++beautify(cb,"}"), 6};
+    { lists:concat([beautify(hash,"#"),
+					beautify(cb, "{"),
+					beautify(ellipsis, "..."),
+					beautify(cb,"}")]), 6};
 
 print_length_map(Map, D, RF, Enc, Str) when is_map(Map) ->
     Pairs = print_length_map_pairs(erts_internal:maps_to_list(Map, D), D, RF, Enc, Str),
@@ -531,14 +534,18 @@ print_length_map_pair(K, V, D, RF, Enc, Str) ->
     {{map_pair, {KS, KL1}, {VS, VL}}, KL1 + VL}.
 
 print_length_tuple(_Tuple, 1, _RF, _Enc, _Str) ->
-    {beautify(cb, "{")++beautify(ellipsis, "...")++beautify(cb,"}"), 5};
+    {lists:concat([ beautify(cb, "{"),
+					beautify(ellipsis, "..."),
+					beautify(cb,"}")]), 5};
 print_length_tuple(Tuple, D, RF, Enc, Str) ->
     L = print_length_list1(tuple_to_list(Tuple), D, RF, Enc, Str),
     IsTagged = is_atom(element(1, Tuple)) and (tuple_size(Tuple) > 1),
     {{tuple,IsTagged,L}, list_length(L, 2)}.
 
 print_length_record(_Tuple, 1, _RF, _RDefs, _Enc, _Str) ->
-    {beautify(cb, "{")++beautify(ellipsis, "...")++beautify(cb,"}"), 5};
+    {lists:concat([beautify(cb, "{"),
+				   beautify(ellipsis, "..."),
+				   beautify(cb,"}")]), 5};
 print_length_record(Tuple, D, RF, RDefs, Enc, Str) ->
     Name = [$# | write_atom(element(1, Tuple), Enc)],
     NameL = length(Name),
