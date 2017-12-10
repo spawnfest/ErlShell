@@ -50,4 +50,7 @@ Manually :
 
 Thanks to Fred Hebert for details explanation about erlang shell and its working on his blog post ![REPL? A bit more (and less) than that](https://ferd.ca/repl-a-bit-more-and-less-than-that.html)
 
+and last but not least A Big thanks to Erlang OTP team, SpawnFest 2017 Organizers, Judges, Sponsors and Gogole. 
+
+
 # Happy Coding :)
