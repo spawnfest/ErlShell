@@ -50,3 +50,4 @@ Manually :
 
 Thanks to Fred Hebert for details explanation about erlang shell and its working on his blog post ![REPL? A bit more (and less) than that](https://ferd.ca/repl-a-bit-more-and-less-than-that.html)
 
+# Happy Coding :)
