@@ -19,15 +19,19 @@
 %%
 -module(lib).
 
--export([flush_receive/0, error_message/2, progname/0, nonl/1, send/2,
-	 sendw/2, eval_str/1]).
+-import(shell_profile,[beautify/2]).
 
--export([extended_parse_exprs/1, extended_parse_term/1,
-         subst_values_for_vars/2]).
+%% -export([flush_receive/0, error_message/2, progname/0, nonl/1, send/2,
+%% 	 sendw/2, eval_str/1]).
+%% 
+%% -export([extended_parse_exprs/1, extended_parse_term/1,
+%%          subst_values_for_vars/2]).
+%% 
+%% -export([format_exception/6, format_exception/7,
+%%          format_stacktrace/4, format_stacktrace/5,
+%%          format_call/4, format_call/5, format_fun/1, format_fun/2]).
 
--export([format_exception/6, format_exception/7,
-         format_stacktrace/4, format_stacktrace/5,
-         format_call/4, format_call/5, format_fun/1, format_fun/2]).
+-compile([export_all]).
 
 -spec flush_receive() -> 'ok'.
 
@@ -653,9 +657,9 @@ pp_arguments(PF, As, I, Enc) ->
 
 brackets_to_parens(S, Enc) ->
     B = unicode:characters_to_binary(S, Enc),
-    Sz = byte_size(B) - 2,
-    <<$[,R:Sz/binary,$]>> = B,
-    [$(,R,$)].
+    Sz = byte_size(B) - 24,
+    <<"\e[0;33m[\e[0m",R:Sz/binary,"\e[0;33m]\e[0m">> = B,
+    [beautify(rb,"("),R,beautify(rb,")")].
 
 printable_list(latin1, As) ->
     io_lib:printable_latin1_list(As);
