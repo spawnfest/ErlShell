@@ -5,11 +5,47 @@
 %%% @version 	Beta
 %%%
 %%% @doc
-%%%		Module Contains Default profile settings and API to beautify. 
+%%%		Module Contains Default profile settings and API to beautify prints. 
 %%%		only ANSI Color codes are supprots.
 %%%
-%%%			Color Codes :
-%%%				"\e[0;33m~ts\e[0m"
+%%%			ANSI Color Codes Guide :
+%%%			========================
+%%%
+%%%				\e[0;33;0m -> Here 	first Digit indicates Text attributes, 
+%%%									Second Digit indicates Foregound Color
+%%%									and Last Third Digit indicates Background Color
+%%%
+%%%							So, \e['Text_attribute';'Foreground_color';'Background_color'm
+%%%
+%%%				Possible values :
+%%%			    ------------------
+%%%					Text Attributes- 		0	default text attributes
+%%%											1 	Bright
+%%%											2	Dim
+%%%											4	underline
+%%%											7	inverse
+%%%											8 	Hidde
+%%%
+%%%					Foreground Color -		30	Black
+%%%											31	Red
+%%%											32	Green
+%%%											33 	Yellow
+%%%											34	Blue
+%%%											35 	Magenta
+%%%											36	Cyan
+%%%											37 	White
+%%%											39	default foreground 
+%%%
+%%%					Background Color -		40 	Black
+%%%											41	Red
+%%%											42	Green
+%%%											43 	Yellow
+%%%											44	Blue
+%%%											45 	Magenta
+%%%											46	Cyan
+%%%											47 	White
+%%%											49	default foreground 
+%%%											
 %%% @end 
 %%%
 %%% @copyright 2017 Prakash Parmar
